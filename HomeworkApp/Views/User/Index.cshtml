@@ -1,0 +1,72 @@
+﻿@model IEnumerable<HomeworkApp.Models.UserListModel>
+
+@{
+    ViewBag.Title = "Homework";
+}
+
+<h2 style="text-align: center">User Administration</h2>
+
+@using (Html.BeginRouteForm(null, FormMethod.Get))
+{
+    <span>
+        @Html.TextBox("search")
+        <input type="submit" value="Filter" class="btn" style="font-weight:bold" />
+    </span>
+    <span class="open-dialog">
+        @Html.ActionLink("Create User", "Create", "User", null, new { @id = "openDialog" })
+    </span>
+}
+<br />
+<table class="table">
+    <tr>
+        <th style="font-size:large">
+            @Html.ActionLink(
+            Html.DisplayNameFor(model => model.Name).ToString(),
+            "Index",
+            new
+            {
+                search = Request.QueryString["search"],
+                sort = ViewBag.UserNameSortParameter
+            })
+        </th>
+        <th style="font-size:large">
+            @Html.ActionLink(
+            Html.DisplayNameFor(model => model.EmailAddress).ToString(),
+            "Index",
+            new
+            {
+                search = Request.QueryString["search"],
+                sort = ViewBag.EmailAddressSortParameter
+            })
+        </th>
+        <th style="font-size:large">
+            @Html.ActionLink(
+            Html.DisplayNameFor(model => model.JoinedDate).ToString(),
+            "Index",
+            new
+            {
+                search = Request.QueryString["search"],
+                sort = ViewBag.JoinedDateSortParameter
+            })
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <div>@Html.DisplayFor(modelItem => item.Name)</div>
+            <div>@Html.DisplayFor(modelItem => item.UserID)</div>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmailAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.JoinedDate)
+        </td>
+    </tr>
+}
+
+</table>
+
+<!-- place holder for Create User dialog -->
+<div id="dialog-edit"></div>
